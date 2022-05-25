@@ -1,0 +1,30 @@
+
+.container {
+    width: 500px;
+    border: 1px solid #1789fc;
+    align-items: center;
+    padding:12px;
+    box-shadow: 5px 4px gray;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+.title {
+    text-align: center;
+    color:#1789fc;
+    text-shadow: 3px 2px gray;
+    font-size: 48px;
+}
+.subtitle {
+    text-align: center;
+    cursor: pointer;
+}
+.btnsub {
+    width: 100%;
+    font-weight: bold;
+    border-radius: 15px;
+}
+
+.input-group-item {
+    border-radius: 15px;
+    outline: none;
+}
