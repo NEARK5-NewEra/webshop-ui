@@ -5,15 +5,21 @@ import reportWebVitals from "./reportWebVitals";
 import store from "./store";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+import { initContract } from './utils'
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
-  document.getElementById("root")
-);
+
+window.nearInitPromise = initContract()
+  .then(() => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <Router>
+          <App />
+        </Router>
+      </Provider>,
+      document.getElementById("root")
+    );
+  })
+  .catch(console.error)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
