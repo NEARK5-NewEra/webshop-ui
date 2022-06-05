@@ -4,10 +4,11 @@ import { GithubOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/i
 
 export default function Cards(props) {
 	const { Meta } = Card;
+	console.log("props.im", props.im)
 	return (
 		<div>
 			<Card
-			hoverable
+				hoverable
 				style={{ width: 300 }}
 				cover={
 					<img

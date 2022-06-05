@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { formatPrice } from "../../help/formatPrice";
 import { ShoppingOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import styles from "./Product.module.css";
-import config from "../../config";
+import config from "../../config/index";
 
 const Product = (props) => {
   const product = props.product;

@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import styles from "./ProductParameter.module.css";
 import { formatPrice } from "../../help/formatPrice";
-import config from "../../config";
+import config from "../../config/index";
 
 const ProductParameter = (props) => {
   const carousel = React.createRef();
@@ -77,7 +77,7 @@ const ProductParameter = (props) => {
                     i === currentCarouselIndex ? styles["is-image-active"] : {}
                   }
                   onClick={() => handleClickImage(null, i)}
-                  style={{ cursor: "pointer", width: "100%", height:"120px", padding: "20px 20px 20px"}}>
+                  style={{ cursor: "pointer", width: "100%", height: "120px", padding: "20px 20px 20px" }}>
                   <img
                     alt="product"
                     src={`http://${config.HOST}:${config.PORT}/api/v1/images/${img}`}
@@ -147,12 +147,12 @@ const ProductParameter = (props) => {
               <Col span={14}>
                 {props.memory.length
                   ? props.memory.map((memory, i) => (
-                      <div key={i}>
-                        {memory.text}
-                        {`${i === 0 ? ", (On board)" : ""}`}
-                        {`${i === props.memory.length - 1 ? "" : ","}`} <br />
-                      </div>
-                    ))
+                    <div key={i}>
+                      {memory.text}
+                      {`${i === 0 ? ", (On board)" : ""}`}
+                      {`${i === props.memory.length - 1 ? "" : ","}`} <br />
+                    </div>
+                  ))
                   : "Dang cap nhat ..."}
               </Col>
             </Row>
@@ -161,11 +161,11 @@ const ProductParameter = (props) => {
               <Col span={14}>
                 {props.storage.length
                   ? props.storage.map((storage, i) => (
-                      <div key={i}>
-                        {storage.text}
-                        {`${i !== props.storage.length - 1 ? "," : ""}`} <br />
-                      </div>
-                    ))
+                    <div key={i}>
+                      {storage.text}
+                      {`${i !== props.storage.length - 1 ? "," : ""}`} <br />
+                    </div>
+                  ))
                   : "Dang cap nhat ..."}
               </Col>
             </Row>

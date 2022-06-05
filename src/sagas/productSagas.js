@@ -3,7 +3,7 @@ import axios from "axios";
 import _ from "lodash";
 import config from '../config'
 
-const url = `http://${config.HOST}:${config.PORT}/api/v1/product`;
+const url = `http://localhost:${3000}/api/v1/product`;
 
 function* getProducts() {
   const fetchProducts = yield axios({
@@ -67,8 +67,8 @@ function* sortProducts(input) {
   // 
   const data = yield select();
   const products = data.products.products;
-  
-  const sortedProducts = _.sortBy(products, (o) => {return sort === "Name" ? o.default_spec.name : o.default_spec.price});
+
+  const sortedProducts = _.sortBy(products, (o) => { return sort === "Name" ? o.default_spec.name : o.default_spec.price });
   if (sortedProducts) {
     yield put({
       type: "SORT_PRODUCTS_SUCCESS",
