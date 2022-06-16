@@ -1,5 +1,5 @@
 
-const CONTRACT_NAME = "shop-payment.newerak5.testnet";
+const CONTRACT_NAME = "payment-shop.newerak5.testnet";
 
 function getConfig(env) {
   switch (env) {

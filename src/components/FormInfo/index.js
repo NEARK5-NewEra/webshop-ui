@@ -5,6 +5,7 @@ import "./style.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 // import { formatMoney } from "../../help/convert"
+import { get_payment_shop_info, get_payid_from_orderid, login, logout, pay, confirm } from '../../utils'
 import { formatPrice } from "../../help/formatPrice";
 
 const { Option } = Select;
@@ -48,6 +49,7 @@ const FormInfo = (props) => {
     let order = {
       name: values.name,
       address: values.diachi,
+      wallet: values.wallet,
       phone_number: values.prefix ? values.prefix : "84" + values.phone,
     };
     if (!localStorage.getItem("token")) {
@@ -102,6 +104,13 @@ const FormInfo = (props) => {
       render: (text) => <a>{text}</a>,
     },
     {
+      title: "Order ID",
+      dataIndex: "order_id",
+      key: "order_id",
+      width: 100,
+      render: (text) => <a>{text}</a>,
+    },
+    {
       title: "Địa chỉ",
       dataIndex: "address",
       width: 100,
@@ -140,10 +149,22 @@ const FormInfo = (props) => {
       width: 10,
       render: (text) => <p>{formatPrice(text)} VNĐ</p>,
     },
+    {
+      title: "Thao tác",
+      dataIndex: "order_id",
+      key: "action",
+      width: 10,
+      render: (text) => <div>
+        {console.log("text", text)}
+        <Button onClick={async (e) => { e.stopPropagation(); e.preventDefault(); const pay_id = await get_payid_from_orderid((text.slice(1))); if (pay_id) { pay(`${pay_id}`) } }}>PAY</Button>
+        <Button onClick={async (e) => { e.stopPropagation(); e.preventDefault(); const pay_id = await get_payid_from_orderid(text.slice(1)); if (pay_id) { confirm(pay_id) } }}>CONFIRM</Button>
+      </div>,
+    },
   ];
 
   const dataOrder = [];
   let listOrders = Object.values(orders);
+  console.log("list:", listOrders)
   if (listOrders) {
     listOrders.map((el) => {
       let products = [];
@@ -160,9 +181,11 @@ const FormInfo = (props) => {
         name: el.name,
         address: el.address,
         phone_number: el.phone_number,
+        wallet: el.wallet,
         products,
         total,
         slugs,
+        order_id: el.order_id
       };
       dataOrder.push(order);
       return null;
@@ -179,6 +202,28 @@ const FormInfo = (props) => {
           onClick={showModal}>
           Danh sách đơn hàng của bạn
         </Button>
+        {
+          !window.walletConnection.isSignedIn() ?
+            <Button
+
+              type="primary"
+              className="getorder"
+              size="large"
+              onClick={(e) => { e.stopPropagation(); login() }}>
+              Login
+            </Button> :
+            <div>
+              <Button
+                type="primary"
+                className="getorder"
+                size="large"
+                onClick={(e) => { e.stopPropagation(); logout() }}>
+                Logout
+              </Button>
+              {window.accountId}!
+            </div>
+        }
+
         <Modal
           title="Danh sách order"
           width={1000}
@@ -225,6 +270,17 @@ const FormInfo = (props) => {
             <Input placeholder="example@gmail.com" />
           </Form.Item>
           <Form.Item
+            name="wallet"
+            label="Wallet"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập wallet!",
+              },
+            ]}>
+            <Input placeholder="example.near" />
+          </Form.Item>
+          <Form.Item
             name="diachi"
             label="Địa Chỉ"
             rules={[
@@ -255,7 +311,7 @@ const FormInfo = (props) => {
           <Form.Item name="information" label="Chú thích thêm">
             <Input.TextArea placeholder="something" />
           </Form.Item>
-          <div style={{width:"100%", display: "flex", justifyContent: "center"}}>
+          <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
             <Button
               className="checkout"
               size="large"

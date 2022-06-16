@@ -16,35 +16,35 @@ const Signin = (props) => {
     console.log("value:", value)
   }
 
-  React.useEffect(
-    () => {
-      window.walletConnection.isSignedIn()
-    }, [])
-  if (!window.walletConnection.isSignedIn()) {
-    return (
-      <button onClick={login}>Sign in</button>
-    )
-  }
+  // React.useEffect(
+  //   () => {
+  //     window.walletConnection.isSignedIn()
+  //   }, [])
+  // if (!window.walletConnection.isSignedIn()) {
+  //   return (
+  //     <button onClick={login}>Sign in</button>
+  //   )
+  // }
   return (
     <Row>
-      <button className="link" style={{ float: 'right' }} onClick={logout}>
+      {/* <button className="link" style={{ float: 'right' }} onClick={logout}>
         Sign out
       </button>
       {window.accountId}!
       <br />
-      {/* <h1>{inputFieldValue}</h1> */}
-      <button onClick={handleCall}>get payment shop</button>
+  
+      <button onClick={handleCall}>get payment shop</button> */}
       {/* <br />
       <input type="text" value={inputFieldValue}></input>
       <button onClick={pay(inputFieldValue)}>get payment id</button> */}
 
 
 
-      {/* <Col offset={4}></Col>
+      <Col offset={4}></Col>
       <Col span={16} style={{ display: 'flex', justifyContent: "center", alignItems: 'center' }}>
         <SigninForm />
       </Col>
-      <Col offset={4}></Col> */}
+      <Col offset={4}></Col>
     </Row>
   );
 };

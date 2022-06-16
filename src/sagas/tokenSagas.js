@@ -1,8 +1,8 @@
 import { put } from "redux-saga/effects";
-import config from '../config'
+import config from '../config/index.js';
 import axios from "axios";
 //generator function
-const url = `http://${config.HOST}:${config.PORT}/api/v1`
+const url = `http://localhost:${3000}/api/v1`
 
 function* getTokenLogin(input) {
   const { username, password } = input;
@@ -20,7 +20,7 @@ function* getTokenLogin(input) {
     .catch((err) => {
       return err.data;
     });
-  
+
   if (data && data.success) {
     localStorage.clear()
     localStorage.setItem("token", data.token);
@@ -60,7 +60,7 @@ function* logOut() {
   });
   yield localStorage.clear();
   window.location.href = "/";
-  yield put({type:"RESET_DATA"});
+  yield put({ type: "RESET_DATA" });
   yield put({ type: "LOG_OUT_DONE" });
 }
 export { getTokenLogin, setTokenLogin, logOut };

@@ -2,8 +2,8 @@ import { put } from "redux-saga/effects";
 import axios from "axios";
 import config from "../config";
 
-const checkoutAPI = `http://${config.HOST}:${config.PORT}/api/v1/checkout`;
-const orderlistAPI = `http://${config.HOST}:${config.PORT}/api/v1/order`;
+const checkoutAPI = `http://localhost:${3000}/api/v1/checkout`;
+const orderlistAPI = `http://localhost:${3000}/api/v1/order`;
 
 function* checkout(input) {
   let cart = JSON.stringify(input.action);
