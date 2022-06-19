@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import logo from "../../logo.png";
 import { change } from '../../help/convert'
 import { formatPrice } from '../../help/formatPrice';
+import { login, logout } from "../../utils";
 const { Search } = Input;
 
 const Header = (props) => {
@@ -19,11 +20,12 @@ const Header = (props) => {
   const dispatch = useDispatch();
   const total = useSelector((state) => state.cart.total);
   const cartList = useSelector((state) => state.cart.cartList);
+
   const currs = ["VNĐ", "USD"];
   const langs = ["Tiếng Việt", "English"];
-  const accs = ["Tài khoản", "Đăng xuất"];
+  const accs = ["Tài khoản","Đăng xuất"];
   const signs = ["Đăng nhập", "Đăng ký"];
-  const links = ["Signin", "Signup"];
+  const links = ["Signin", "Signup", ""];
   const [currency, setCurrency] = useState(currs[0]);
   const [language, setLanguage] = useState(langs[0]);
   const [account, setAccount] = useState(accs[0]);
@@ -56,13 +58,8 @@ const Header = (props) => {
       });
     }
   }, [token, dispatch]);
-
-  
-  
   useEffect(() => {
     if (localStorage.getItem("token") || token !== "") {
-      
-
       dispatch({
         type: "UPDATE_CART",
         action: {
@@ -81,7 +78,7 @@ const Header = (props) => {
   useEffect(() => {
     if (account === "Đăng xuất") {
       dispatch({ type: "LOG_OUT" });
-    }
+    } 
   }, [account, setAccount, dispatch]);
 
   const onSearch = (value) => {
@@ -153,9 +150,11 @@ const Header = (props) => {
               setSign(s);
             }}
           >
-            <Link exact="true" to={`/${link[index]}`}>
-              {s}
-            </Link>
+            {index < 5 &&
+              <Link exact="true" to={`/${link[index]}`}>
+                {s}
+              </Link>
+            }
           </Menu.Item>
         ))}
     </Menu>
@@ -195,6 +194,32 @@ const Header = (props) => {
                 >
                   Tel: +84 965 857 082
                 </Col>
+                <Col
+                  lg={{ span: 10 }}
+                  xs={{ span: 24 }}
+                  className={styles.item}
+                  style={{ marginLeft: "auto" }}
+                >
+                  {
+                    !window.walletConnection.isSignedIn() ?
+                      <Button
+                        type="primary"
+                        className="getorder"
+                        size="medium"
+                        onClick={(e) => { e.stopPropagation(); login() }}>
+                        Connect Near
+                      </Button> :  <div>
+                        {window.accountId} |  &nbsp; 
+                          <Button
+                            type="primary"
+                            className="getorder"
+                            size="medium"
+                            onClick={(e) => { e.stopPropagation(); logout() }}>
+                            Disconnect Near 
+                          </Button>
+                      </div>
+                  }
+              </Col>   
                 <Col
                   lg={{ span: 10 }}
                   xs={{ span: 24 }}

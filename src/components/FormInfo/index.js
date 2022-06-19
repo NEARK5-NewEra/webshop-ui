@@ -202,7 +202,7 @@ const FormInfo = (props) => {
           onClick={showModal}>
           Danh sách đơn hàng của bạn
         </Button>
-        {
+        {/* {
           !window.walletConnection.isSignedIn() ?
             <Button
 
@@ -222,7 +222,7 @@ const FormInfo = (props) => {
               </Button>
               {window.accountId}!
             </div>
-        }
+        } */}
 
         <Modal
           title="Danh sách order"
